@@ -1,5 +1,3 @@
-// Handler tests exercise lifecycle, ownership, partial updates and persistent secrets.
-// A fake runtime proves rejected requests never reach Docker.
 package mysqlagent
 
 import (

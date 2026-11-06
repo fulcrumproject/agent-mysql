@@ -1,5 +1,3 @@
-// Backend contracts keep MySQL lifecycle handlers independent from the Docker SDK.
-// Public instance metadata deliberately excludes all credentials and host secret paths.
 package mysqlagent
 
 import (
@@ -30,6 +28,7 @@ type UpdateProperties struct {
 	Port     *int    `json:"port,omitempty"`
 }
 
+// Instance is returned to Core; never include secrets.
 type Instance struct {
 	ContainerID string `json:"containerId"`
 	Volume      string `json:"volume"`

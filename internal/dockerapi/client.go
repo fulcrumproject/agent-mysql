@@ -1,5 +1,3 @@
-// Client implements the agent's runtime contract through the local Docker Engine SDK.
-// Resource names and ownership labels are derived exclusively from Fulcrum identities.
 package dockerapi
 
 import (
@@ -448,7 +446,6 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	if _, err = c.api.NetworkRemove(ctx, resourceName(id), client.NetworkRemoveOptions{}); err != nil && !errdefs.IsNotFound(err) {
 		return err
 	}
-	// Strict IDs + private parent + validated manifest prevent deleting arbitrary paths.
 	return os.RemoveAll(c.dir(id))
 }
 

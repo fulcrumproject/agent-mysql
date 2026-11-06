@@ -2,7 +2,7 @@
 
 A Fulcrum agent for dedicated MySQL instances on a **local Linux Docker Engine**. Each service owns a container, a persistent data volume, a bridge network and protected bootstrap files.
 
-The architecture follows [agent-proxmox-fae](https://github.com/fulcrumproject/agent-proxmox-fae): Go bootstrap, provider configuration from Core, typed lifecycle handlers, a backend interface, and `agent-lib-go/stdagent` for polling, health and metrics. There is no extra HTTP service or job scheduler.
+The agent receives runtime configuration from Fulcrum Core and uses `agent-lib-go/stdagent` for job polling, health and metrics.
 
 ## Scope and limitations
 
@@ -35,7 +35,7 @@ A systemd example is in `examples/fulcrum-mysql-agent.service`. Bootstrap files 
 
 ## Register with Core
 
-The JSON files under `examples/` are API request examples, not a separate schema dialect.
+`examples/` contains Core API request bodies.
 
 1. Create a ServiceType using `examples/service-type.json` (`POST /api/v1/service-types`).
 2. Substitute its ID into `examples/agent-type.json` and create the AgentType. No infrastructure-type association is needed for this standalone agent.
@@ -58,7 +58,7 @@ The provider's `configuration.docker` contains:
 | `operationTimeout` | 180 seconds |
 | `stopTimeout` | 60 seconds; no greater than operationTimeout |
 
-Align Core's job timeout with operation/polling time and queue delays; enable Core's job maintenance when timeout recovery is required. This agent does not replace the shared library's job acknowledgement or retry behavior. Provider configuration is loaded on connection; restart the agent to change it. Do not change `stateDir`, `host` or `bindIp` for existing services as an implicit migration.
+Align Core's job timeout with operation/polling time and queue delays; enable Core's job maintenance when timeout recovery is required. Provider configuration is loaded on connection; restart the agent to change it. Do not change `stateDir`, `host` or `bindIp` for existing services as an implicit migration.
 
 Each instance uses its own bridge network. Configure Docker's address pools for the intended number of instances. The default local volume driver and Docker data-root filesystem are used; external volume drivers are not part of this version.
 
@@ -78,11 +78,11 @@ A failed job does not trigger destructive rollback. Names and labels derive from
 
 Docker's `unless-stopped` policy restarts an exited server and normally restores running services after host/daemon restart, without Core availability. Explicitly stopped instances remain stopped. This is not failover, and unhealthy SQL alone does not trigger automatic destructive repair.
 
-Successful jobs return only non-secret metadata in `agentInstanceData`: container ID, volume, host, port, database and username. `agentInstanceId` is the stable Core service ID, not a transient container identifier.
+Successful jobs return only non-secret metadata in `agentInstanceData`: container ID, volume, host, port, database and username. `agentInstanceId` is the Core service ID.
 
 ## Secrets and storage
 
-Customer passwords are persistent vault properties. Root passwords are generated separately per service. Owner-only files under `stateDir/AGENT_ID/SERVICE_ID/secrets` are mounted read-only for bootstrap; Docker environment configuration contains file paths, never password values. Root is restricted to local socket administration. Bootstrap SQL and client option-file escaping are tested with quoted/backslash-containing passwords.
+Customer passwords are persistent vault properties. Root passwords are generated separately per service. Owner-only files under `stateDir/AGENT_ID/SERVICE_ID/secrets` are mounted read-only for bootstrap; Docker environment configuration contains file paths, never password values. Root is restricted to local socket administration.
 
 The local state directory is essential operational state: **do not delete it while retaining the database volume**. Store it on persistent storage with mode 0700; secret files are 0600. These files are not encrypted at rest by the agent. A host administrator or anyone controlling Docker can access them. A per-agent process lock prevents two processes from concurrently owning the same state directory.
 
@@ -107,7 +107,7 @@ make integration
 python3 test/core_smoke.py --core-repo ../core
 ```
 
-See `test/README.md` for isolation, cleanup and prerequisites, `docs/CONTRACT.md` for the approved scope, and `docs/VERIFICATION.md` for recorded evidence and limitations. Tests do not reboot the host or restart a shared Docker daemon.
+See `test/README.md` for test prerequisites and cleanup, `docs/CONTRACT.md` for the service contract, and `docs/VERIFICATION.md` for the verification baseline.
 
 ## License
 

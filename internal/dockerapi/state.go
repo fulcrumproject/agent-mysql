@@ -1,5 +1,3 @@
-// Host-local state stores bootstrap secrets in owner-only files, never Docker env values.
-// Atomic directory publication and ownership checks preserve credentials across retries.
 package dockerapi
 
 import (

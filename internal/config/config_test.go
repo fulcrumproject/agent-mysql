@@ -1,5 +1,3 @@
-// Configuration tests reject remote runtimes and accidentally public database bindings.
-// They also check provider resource and timeout bounds before any provisioning.
 package config
 
 import (

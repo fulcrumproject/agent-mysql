@@ -1,5 +1,3 @@
-// Package config defines local bootstrap settings and provider runtime configuration.
-// Runtime settings are delivered by Fulcrum Core, as in agent-proxmox-fae.
 package config
 
 import (

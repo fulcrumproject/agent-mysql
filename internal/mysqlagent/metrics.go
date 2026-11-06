@@ -1,5 +1,3 @@
-// Service metrics use the existing stdagent reporting pipeline and stable service IDs.
-// Free disk space describes the shared Docker filesystem, not per-service capacity.
 package mysqlagent
 
 import (

@@ -1,10 +1,8 @@
-# Contratto approvato — agent MySQL v1
-
-Fonte: intervista con l'utente. Implementazione e commit locale autorizzati; nessun push.
+# Agent MySQL v1
 
 ## Perimetro
 
-- Agent Go con la stessa architettura di `agent-proxmox-fae`, riutilizzando `agent-lib-go/stdagent`, configurazione dal core e adapter Docker testabile.
+- Agent Go basato su `agent-lib-go/stdagent`, con configurazione dal core e adapter Docker.
 - Un agent locale per host Linux, con socket Unix Docker. Nessun servizio HTTP intermedio.
 - Un container MySQL Community 9.7 LTS e un volume dati persistente per servizio. Immagine ufficiale fissata a patch e digest, non selezionabile dal cliente.
 - Database, username e password forniti alla creazione; password nel vault persistente del core. Utente con privilegi sul solo database assegnato, amministrazione riservata all'agent.
@@ -30,4 +28,4 @@ Backup/restore, HA, gestione remota/multi-host, quote disco, certificati gestiti
 
 ## Verifica
 
-Test unitari con mock; integrazione con Docker e MySQL reali su dati temporanei per persistenza, privilegi, limiti, errori, ownership e cancellazione; lifecycle completo attraverso un core di test. Annotare esattamente i controlli non eseguibili. Non usare dati o infrastrutture di produzione.
+Test unitari con mock; integrazione con Docker e MySQL reali su dati temporanei per persistenza, privilegi, limiti, errori, ownership e cancellazione; lifecycle completo attraverso un core di test. Non usare dati o infrastrutture di produzione.

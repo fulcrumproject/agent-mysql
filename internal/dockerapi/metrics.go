@@ -1,5 +1,3 @@
-// Runtime statistics are normalized to container limits and measured via Docker.
-// SQL errors are reduced to availability=0 without exposing server or credential output.
 package dockerapi
 
 import (

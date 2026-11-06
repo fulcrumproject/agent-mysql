@@ -1,5 +1,3 @@
-// Pure adapter tests protect ownership, secret persistence and container configuration.
-// These tests do not access Docker; real lifecycle behavior has separate integration tests.
 package dockerapi
 
 import (

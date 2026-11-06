@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-# Exercise the real core and agent against an isolated, disposable PostgreSQL database.
-# Only uniquely named or explicitly agent-labelled test resources are removed.
 import argparse
 import json
 import os

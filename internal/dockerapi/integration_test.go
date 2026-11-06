@@ -1,7 +1,5 @@
 //go:build integration
 
-// Runtime integration tests use disposable services and the pinned MySQL image.
-// Cleanup is restricted to resources created by this test; no global Docker prune is used.
 package dockerapi
 
 import (

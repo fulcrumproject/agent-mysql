@@ -1,5 +1,3 @@
-// The executable wires Fulcrum stdagent to the local Docker implementation.
-// Configuration, logging and signal handling follow the FAE agent bootstrap.
 package main
 
 import (

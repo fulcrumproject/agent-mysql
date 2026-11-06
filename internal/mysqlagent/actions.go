@@ -1,5 +1,3 @@
-// Typed job handlers enforce the service lifecycle before invoking the runtime.
-// Repeated create actions resolve persistent input secrets without returning them.
 package mysqlagent
 
 import (

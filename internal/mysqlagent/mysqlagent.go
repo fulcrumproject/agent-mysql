@@ -1,5 +1,3 @@
-// MySQLAgent composes stdagent with typed MySQL jobs and an injected runtime client.
-// Bootstrap, remote configuration and callback registration mirror the FAE agent.
 package mysqlagent
 
 import (
