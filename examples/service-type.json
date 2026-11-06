@@ -1,0 +1,239 @@
+{
+  "name": "MySQL",
+  "propertySchema": {
+    "properties": {
+      "cpu": {
+        "type": "integer",
+        "label": "CPU limit (cores)",
+        "required": true,
+        "validators": [
+          {
+            "type": "min",
+            "config": {
+              "value": 1
+            }
+          },
+          {
+            "type": "max",
+            "config": {
+              "value": 64
+            }
+          }
+        ],
+        "authorizers": [
+          {
+            "type": "state",
+            "config": {
+              "allowedStates": [
+                "Stopped"
+              ]
+            }
+          }
+        ]
+      },
+      "memory": {
+        "type": "integer",
+        "label": "Memory limit (MiB)",
+        "required": true,
+        "validators": [
+          {
+            "type": "min",
+            "config": {
+              "value": 1024
+            }
+          },
+          {
+            "type": "max",
+            "config": {
+              "value": 262144
+            }
+          }
+        ],
+        "authorizers": [
+          {
+            "type": "state",
+            "config": {
+              "allowedStates": [
+                "Stopped"
+              ]
+            }
+          }
+        ]
+      },
+      "database": {
+        "type": "string",
+        "label": "Database",
+        "required": true,
+        "immutable": true,
+        "validators": [
+          {
+            "type": "pattern",
+            "config": {
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,63}$"
+            }
+          }
+        ]
+      },
+      "username": {
+        "type": "string",
+        "label": "Database user",
+        "required": true,
+        "immutable": true,
+        "validators": [
+          {
+            "type": "pattern",
+            "config": {
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]{0,31}$"
+            }
+          }
+        ]
+      },
+      "password": {
+        "type": "string",
+        "label": "Database password",
+        "required": true,
+        "immutable": true,
+        "secret": {
+          "type": "persistent"
+        },
+        "validators": [
+          {
+            "type": "minLength",
+            "config": {
+              "value": 16
+            }
+          },
+          {
+            "type": "maxLength",
+            "config": {
+              "value": 256
+            }
+          },
+          {
+            "type": "pattern",
+            "config": {
+              "pattern": "^[^\\x00\\r\\n]+$"
+            }
+          }
+        ]
+      },
+      "port": {
+        "type": "integer",
+        "label": "Private host port",
+        "required": true,
+        "validators": [
+          {
+            "type": "min",
+            "config": {
+              "value": 1024
+            }
+          },
+          {
+            "type": "max",
+            "config": {
+              "value": 65535
+            }
+          }
+        ],
+        "immutable": true,
+        "authorizers": [
+          {
+            "type": "actor",
+            "config": {
+              "actors": [
+                "system"
+              ]
+            }
+          }
+        ],
+        "generator": {
+          "type": "pool",
+          "config": {
+            "poolType": "mysql.port"
+          }
+        }
+      }
+    }
+  },
+  "lifecycleSchema": {
+    "states": [
+      {
+        "name": "New"
+      },
+      {
+        "name": "Started"
+      },
+      {
+        "name": "Stopped"
+      },
+      {
+        "name": "Deleted"
+      }
+    ],
+    "initialState": "New",
+    "terminateState": "Deleted",
+    "terminalStates": [
+      "Deleted"
+    ],
+    "runningStates": [
+      "Started"
+    ],
+    "actions": [
+      {
+        "name": "create",
+        "requestSchemaType": "properties",
+        "transitions": [
+          {
+            "from": "New",
+            "to": "Started"
+          }
+        ]
+      },
+      {
+        "name": "start",
+        "transitions": [
+          {
+            "from": "Stopped",
+            "to": "Started"
+          }
+        ]
+      },
+      {
+        "name": "stop",
+        "transitions": [
+          {
+            "from": "New",
+            "to": "Stopped"
+          },
+          {
+            "from": "Started",
+            "to": "Stopped"
+          },
+          {
+            "from": "Stopped",
+            "to": "Stopped"
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "requestSchemaType": "properties",
+        "transitions": [
+          {
+            "from": "Stopped",
+            "to": "Stopped"
+          }
+        ]
+      },
+      {
+        "name": "delete",
+        "transitions": [
+          {
+            "from": "Stopped",
+            "to": "Deleted"
+          }
+        ]
+      }
+    ]
+  }
+}

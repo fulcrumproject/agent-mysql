@@ -1,0 +1,13 @@
+{
+  "name": "application-database",
+  "agentId": "REPLACE_WITH_AGENT_ID",
+  "serviceTypeId": "REPLACE_WITH_SERVICE_TYPE_ID",
+  "groupId": "REPLACE_WITH_GROUP_ID",
+  "properties": {
+    "cpu": 1,
+    "memory": 1024,
+    "database": "app_data",
+    "username": "appuser",
+    "password": "REPLACE_WITH_A_STRONG_PASSWORD"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "agentToken": "REPLACE_WITH_AGENT_TOKEN",
+  "fulcrumApiUrl": "http://localhost:3000",
+  "jobPollInterval": 5000000000,
+  "metricReportInterval": 30000000000,
+  "log": {
+    "level": "info",
+    "format": "json"
+  }
+}

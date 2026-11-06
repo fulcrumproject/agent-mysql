@@ -1,0 +1,115 @@
+{
+  "name": "MySQL Docker",
+  "serviceTypeIds": [
+    "REPLACE_WITH_SERVICE_TYPE_ID"
+  ],
+  "configurationSchema": {
+    "properties": {
+      "docker": {
+        "type": "object",
+        "label": "Local Docker runtime",
+        "required": true,
+        "properties": {
+          "socketPath": {
+            "type": "string",
+            "default": "/var/run/docker.sock"
+          },
+          "stateDir": {
+            "type": "string",
+            "default": "/var/lib/fulcrum-agent-mysql"
+          },
+          "bindIp": {
+            "type": "string",
+            "required": true,
+            "label": "Private host interface IP"
+          },
+          "host": {
+            "type": "string",
+            "required": true,
+            "label": "Advertised private hostname"
+          },
+          "maxCpu": {
+            "type": "integer",
+            "label": "Maximum CPUs per service",
+            "required": true,
+            "validators": [
+              {
+                "type": "min",
+                "config": {
+                  "value": 1
+                }
+              },
+              {
+                "type": "max",
+                "config": {
+                  "value": 64
+                }
+              }
+            ],
+            "default": 64
+          },
+          "maxMemory": {
+            "type": "integer",
+            "label": "Maximum memory per service (MiB)",
+            "required": true,
+            "validators": [
+              {
+                "type": "min",
+                "config": {
+                  "value": 1024
+                }
+              },
+              {
+                "type": "max",
+                "config": {
+                  "value": 262144
+                }
+              }
+            ],
+            "default": 262144
+          },
+          "operationTimeout": {
+            "type": "integer",
+            "label": "Operation timeout (seconds)",
+            "required": true,
+            "validators": [
+              {
+                "type": "min",
+                "config": {
+                  "value": 10
+                }
+              },
+              {
+                "type": "max",
+                "config": {
+                  "value": 3600
+                }
+              }
+            ],
+            "default": 180
+          },
+          "stopTimeout": {
+            "type": "integer",
+            "label": "Graceful stop timeout (seconds)",
+            "required": true,
+            "validators": [
+              {
+                "type": "min",
+                "config": {
+                  "value": 1
+                }
+              },
+              {
+                "type": "max",
+                "config": {
+                  "value": 3600
+                }
+              }
+            ],
+            "default": 60
+          }
+        }
+      }
+    }
+  }
+}

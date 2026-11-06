@@ -1,0 +1,7 @@
+{
+  "name": "MySQL ports on host-1",
+  "type": "mysql.port",
+  "propertyType": "integer",
+  "generatorType": "list",
+  "servicePoolSetId": "REPLACE_WITH_POOL_SET_ID"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "mysql-host-1",
+  "providerId": "REPLACE_WITH_PROVIDER_ID",
+  "agentTypeId": "REPLACE_WITH_AGENT_TYPE_ID",
+  "servicePoolSetId": "REPLACE_WITH_POOL_SET_ID",
+  "configuration": {
+    "docker": {
+      "bindIp": "10.0.0.10",
+      "host": "mysql.internal"
+    }
+  }
+}

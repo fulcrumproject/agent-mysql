@@ -1,0 +1,17 @@
+[Unit]
+Description=Fulcrum MySQL Agent
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+UMask=0077
+ExecStart=/usr/local/bin/fulcrum-mysql-agent -config /etc/fulcrum/mysql-agent.json
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+
+[Install]
+WantedBy=multi-user.target

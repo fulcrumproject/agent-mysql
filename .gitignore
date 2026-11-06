@@ -1,0 +1,6 @@
+/agent
+/bin/
+/coverage.out
+/.env
+/config.local.json
+/state/

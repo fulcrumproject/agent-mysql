@@ -1,0 +1,22 @@
+[
+  {
+    "name": "mysql.cpu.usage",
+    "entityType": "Service"
+  },
+  {
+    "name": "mysql.memory.usage",
+    "entityType": "Service"
+  },
+  {
+    "name": "mysql.uptime",
+    "entityType": "Service"
+  },
+  {
+    "name": "mysql.available",
+    "entityType": "Service"
+  },
+  {
+    "name": "mysql.host.disk.free",
+    "entityType": "Service"
+  }
+]
